@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="CRD - Concours Saint-Valentin 10 ans d'amour. Participez au tirage au sort pour gagner une voiture!">
+    <title>CRD - Car Sell & Service</title>
+    <style>
+        /* ========================================
+           CSS CUSTOM PROPERTIES (VARIABLES)
+        ======================================== */
+        :root {
+            /* Colors */
+            --primary-color: #ffffff;
+            --primary-dark: #cc00aa;
+            --secondary-color: #ca5050;
+            --secondary-dark: #db33cd;
+            --accent-color: #ff0080;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+
+            /* Background Gradient */
+            --bg-gradient: linear-gradient(135deg, #2e1a2e 0%, #3e162d 25%, #590f60 50%, #833460 75%, #a66882 100%);
+
+            /* Glass Morphism */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-blur: blur(10px);
+
+            /* Spacing */
+            --spacing-xs: 5px;
+            --spacing-sm: 10px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 40px;
+            --spacing-2xl: 50px;
+            --spacing-3xl: 60px;
+            --spacing-4xl: 80px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 10px;
+            --radius-lg: 15px;
+            --radius-xl: 20px;
+            --radius-full: 50%;
+            --radius-pill: 25px;
+
+            /* Typography */
+            --font-family: 'Arial', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 28px;
+            --font-size-4xl: 2.5rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.5rem;
+            --font-size-7xl: 4.5rem;
+
+            /* Shadows */
+            --shadow-sm: 0 10px 20px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 20px 40px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+
+            /* Z-index */
+            --z-background: -1;
+            --z-content: 100;
+            --z-header: 1000;
+
+            /* Breakpoints */
+            --bp-mobile: 768px;
+            --bp-tablet: 1200px;
+        }
+
+        /* ========================================
+           RESET & BASE STYLES
+        ======================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+        ======================================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ========================================
+           COMPONENT STYLES
+        ======================================== */
+
+        /* Header */
+        .header {
+            padding: var(--spacing-2xl) var(--spacing-4xl);
+            position: relative;
+            z-index: var(--z-header);
+        }
+
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-decoration: none;
+        }
+
+        .logo__icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo__icon::before,
+        .logo__icon::after {
+            content: '';
+            background: var(--text-primary);
+            border-radius: 2px;
+            position: absolute;
+        }
+
+        .logo__icon::before {
+            width: 20px;
+            height: 3px;
+            top: 12px;
+        }
+
+        .logo__icon::after {
+            width: 15px;
+            height: 3px;
+            bottom: 12px;
+        }
+
+        .logo__text {
+            color: var(--primary-color);
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: var(--spacing-xl);
+            list-style: none;
+        }
+
+        .nav__link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            transition: color var(--transition-normal);
+            position: relative;
+        }
+
+        .nav__link:first-child,
+        .nav__link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width var(--transition-normal);
+        }
+
+        .nav__link:hover::after {
+            width: 100%;
+        }
+
+        /* Search */
+        .search {
+            position: relative;
+        }
+
+
+        /* Main Content */
+        .main {
+            padding: var(--spacing-4xl) var(--spacing-2xl) 0;
+            position: relative;
+            z-index: var(--z-content);
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .hero__title {
+            font-size: var(--font-size-7xl);
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero__title--highlight {
+            color: var(--primary-color);
+        }
+
+        .hero__subtitle {
+            font-size: var(--font-size-5xl);
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-xl);
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+
+        .hero__icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #6a5acd, #9370db);
+            border-radius: 12px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hero__icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        /* Contest Form */
+        .contest {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+            max-width: 500px;
+            margin: 0 auto var(--spacing-3xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contest__title {
+            color: var(--text-primary);
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .contest__input {
+            width: 100%;
+            padding: 15px var(--spacing-md);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-md);
+            transition: all var(--transition-normal);
+        }
+
+        .contest__input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .contest__input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(121, 80, 202, 0.1);
+        }
+
+        .contest__button {
+            background: linear-gradient(45deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--text-primary);
+            padding: 15px var(--spacing-xl);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contest__button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(121, 80, 202, 0.3);
+        }
+
+        /* Car Stats */
+        .stats {
+            display: flex;
+            justify-content: flex-start;
+            gap: var(--spacing-3xl);
+            margin-bottom: var(--spacing-xl);
+            padding-left: 100px;
+        }
+
+        .stat {
+            text-align: left;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .stat:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stat:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .stat__value {
+            color: var(--text-primary);
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat__label {
+            color: var(--primary-color);
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .stat__icon {
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            color: var(--text-primary);
+        }
+
+        /* Car Display */
+        .car-showcase {
+            position: relative;
+            height: 400px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .car-showcase__image {
+            width: 999px;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -28%);
+            z-index: 10;
+        }
+
+        .car-showcase__platform {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 100px;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.3));
+            border-radius: var(--radius-full);
+            box-shadow: 0 0 100px rgba(0, 212, 255, 0.5);
+            z-index: var(--z-background);
+        }
+
+        .car-showcase__platform::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 20px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.6), transparent);
+            border-radius: var(--radius-full);
+        }
+
+        .car-showcase__glow {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 250px;
+            background: linear-gradient(45deg, var(--accent-color), #ffed4e);
+            border-radius: var(--radius-xl) var(--radius-xl) var(--radius-md) var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+            z-index: var(--z-background);
+        }
+
+        /* Model Info */
+        .model-info {
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: left;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            min-width: 200px;
+        }
+
+        .model-info__name {
+            color: var(--text-primary);
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .model-info__type {
+            color: var(--primary-color);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .model-info__rating {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .model-info__star {
+            color: var(--accent-color);
+            font-size: var(--font-size-lg);
+        }
+
+        .model-info__reviews {
+            color: var(--text-secondary);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Background Effects */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-shapes__item {
+            position: absolute;
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+
+        .bg-shapes__item:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, var(--primary-color), transparent);
+            border-radius: var(--radius-xl);
+        }
+
+        .bg-shapes__item:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, var(--accent-color), transparent);
+            border-radius: var(--radius-full);
+            animation-delay: -10s;
+        }
+
+        .bg-shapes__item:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #9370db, transparent);
+            transform: rotate(45deg);
+            animation-delay: -5s;
+        }
+
+        /* footer */
+        footer .custom_link {
+            padding: 20px;
+            color: #fff;
+            text-decoration: double;
+            text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+
+        /* ========================================
+           ANIMATIONS
+        ======================================== */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+        @media (max-width: 1200px) {
+            .hero__title {
+                font-size: var(--font-size-6xl);
+            }
+
+            .hero__subtitle {
+                font-size: var(--font-size-5xl);
+            }
+
+            .stats {
+                display: none;
+            }
+
+            .model-info {
+                display: none;
+            }
+
+            .car-showcase__glow {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: var(--spacing-md);
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero__title {
+                font-size: var(--font-size-4xl);
+            }
+
+            .hero__subtitle {
+                font-size: var(--font-size-4xl);
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                padding-left: var(--spacing-md);
+                align-items: center;
+            }
+
+            .model-info {
+                position: static;
+                transform: none;
+                margin: var(--spacing-md) auto;
+                width: 90%;
+                max-width: 400px;
+            }
+
+            .car-showcase__glow {
+                width: 300px;
+                height: 150px;
+            }
+
+            .car-showcase__platform {
+                width: 400px;
+            }
+
+            .car-showcase__image {
+                width: 600px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .hero__title {
+                font-size: var(--font-size-4xl);
+            }
+
+            .hero__subtitle {
+                font-size: var(--font-size-3xl);
+            }
+
+            .contest {
+                margin-left: var(--spacing-md);
+                margin-right: var(--spacing-md);
+            }
+        }
+
+        /* ========================================
+           ACCESSIBILITY IMPROVEMENTS
+        ======================================== */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .contest__input:focus,
+        .contest__button:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* ========================================
+           PRINT STYLES
+        ======================================== */
+        @media print {
+
+            .bg-shapes,
+            .search,
+            .contest {
+                display: none;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .hero__title,
+            .model-info__name {
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Decorative Elements -->
+    <div class="bg-shapes" aria-hidden="true">
+        <div class="bg-shapes__item"></div>
+        <div class="bg-shapes__item"></div>
+        <div class="bg-shapes__item"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="header__container">
+            <!-- Logo -->
+            <a href="#" class="logo" aria-label="CRD - Accueil">
+                <div class="logo__icon" aria-hidden="true"></div>
+                <span class="logo__text">CRD</span>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="nav" role="navigation" aria-label="Navigation principale">
+                <ul class="nav">
+                    <li><a href="#home" class="nav__link">Accueil</a></li>
+                    <li><a href="#listing" class="nav__link">Catalogue</a></li>
+                    <li><a href="#service" class="nav__link">Service</a></li>
+                    <li><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" role="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero__title">
+                CONCOURS <span class="hero__title--highlight">SAINT-VALENTIN</span>
+            </h1>
+            <h2 class="hero__subtitle">
+                10 ANS D'AMOUR
+                <span class="hero__icon" aria-hidden="true"></span>
+            </h2>
+
+        </section>
+
+        <!-- Contest Form -->
+        <section class="contest">
+            <h3 class="contest__title">Participez au tirage au sort</h3>
+            <form class="contest__form" novalidate>
+                <label for="phone-number" class="sr-only">Numéro de téléphone</label>
+                <input type="tel" id="phone-number" class="contest__input"
+                    placeholder="Votre numéro de téléphone (06XXXXXXXX)" pattern="[0-9]{10}" required
+                    aria-describedby="phone-help">
+                <div id="phone-help" class="sr-only">
+                    Entrez votre numéro de téléphone à 10 chiffres
+                </div>
+                <button class="contest__button" type="submit">
+                    Participer maintenant
+                </button>
+            </form>
+        </section>
+
+        <!-- Car Statistics -->
+        <section class="stats" aria-label="Statistiques du véhicule">
+            <div class="stat">
+                <div class="stat__value">
+                    <span class="stat__icon" aria-hidden="true">⚡</span>
+                    3.1 s
+                </div>
+                <div class="stat__label">0-100 km/h</div>
+            </div>
+            <div class="stat">
+                <div class="stat__value">576 km</div>
+                <div class="stat__label">Autonomie (est.)</div>
+            </div>
+            <div class="stat">
+                <div class="stat__value">AWD</div>
+                <div class="stat__label">Double moteur</div>
+            </div>
+        </section>
+
+        <!-- Car Showcase -->
+        <section class="car-showcase" aria-label="Présentation du véhicule">
+            <div class="car-showcase__platform" aria-hidden="true"></div>
+            <div class="car-showcase__glow" aria-hidden="true"></div>
+            <img src="car.png" alt="Voiture Model Rx3 - Vue de côté" class="car-showcase__image" loading="lazy">
+
+            <!-- Model Information -->
+            <aside class="model-info">
+                <h3 class="model-info__name">Model Rx3</h3>
+                <p class="model-info__type">Vue d'ensemble</p>
+                <div class="model-info__rating" aria-label="Note: 5 étoiles sur 5">
+                    <span class="model-info__star" aria-hidden="true">★</span>
+                    <span class="model-info__star" aria-hidden="true">★</span>
+                    <span class="model-info__star" aria-hidden="true">★</span>
+                    <span class="model-info__star" aria-hidden="true">★</span>
+                    <span class="model-info__star" aria-hidden="true">★</span>
+                </div>
+                <p class="model-info__reviews">1000+ Avis</p>
+            </aside>
+        </section>
+    </main>
+
+    <!-- My Portfolio Website -->
+    <footer>
+        <a href="https://www.lafkiri.com/" class="custom_link" target="_blank">
+            https://www.lafkiri.com/
+        </a>
+    </footer>
+
+</body>
+
+</html>
